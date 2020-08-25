@@ -49,6 +49,15 @@
             "mainClass": "com.zullservice.zuulservice.ZuulServiceApplication",
             "projectName": "zuul-service",
             "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MavenWrapperDownloader",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "MavenWrapperDownloader",
+            "args": ""
         }
     ]
 }
