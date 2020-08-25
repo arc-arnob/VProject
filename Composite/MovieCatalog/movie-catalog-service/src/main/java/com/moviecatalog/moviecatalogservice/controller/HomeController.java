@@ -8,6 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -66,6 +67,7 @@ public class HomeController {
 
 
     @GetMapping("/showmovies")
+    @PreAuthorize("hasAuthority('SCOPE_profile')")
     public Object[] showAllMovies(){
         
         ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity("http://localhost:9090/movieservice/allmovies", Object[].class);
