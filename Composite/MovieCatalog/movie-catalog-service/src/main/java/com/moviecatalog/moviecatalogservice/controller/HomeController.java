@@ -70,14 +70,14 @@ public class HomeController {
     @PreAuthorize("hasAuthority('SCOPE_profile')")
     public Object[] showAllMovies(){
         
-        ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity("http://localhost:9090/movieservice/allmovies", Object[].class);
+        ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity("http://movie-service-api/movieservice/allmovies", Object[].class);
         Object[] objects = responseEntity.getBody();
         return objects;
     }
 
     @GetMapping("/showratedmovie/{userId}")
     public Object[] showAllRatedMovies(@PathVariable String userId){
-        ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity("http://localhost:9091/ratingservice/allratings/" + userId, Object[].class);
+        ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity("http://review-service-api/ratingservice/allratings/" + userId, Object[].class);
         Object[] objects = responseEntity.getBody();
         return objects;
     }
