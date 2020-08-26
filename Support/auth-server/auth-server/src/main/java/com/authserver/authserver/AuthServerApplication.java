@@ -46,7 +46,7 @@ public class AuthServerApplication {
 		public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 			clients.inMemory()
 				.withClient("root")
-				.secret("secret")
+				.secret("{noop}secret")
 				.authorizedGrantTypes("authorization_code", "refresh_token", "implicit", "password", "client_credentials")
 				.scopes("webshop");
 		}
