@@ -24,15 +24,15 @@ public class ProductService {
     @Autowired
     private LoadBalancerClient loadBalancer;
 
-    @RequestMapping("/{productId}")
+    @RequestMapping("/{urlId}")
     public ResponseEntity<String> getProductComposite(
-        @PathVariable int productId,
+        @PathVariable int urlId,
         @RequestHeader(value="Authorization") String authorizationHeader,
         Principal currentUser) {
 
-        LOG.info("ProductApi: User={}, Auth={}, called with productId={}", currentUser.getName(), authorizationHeader, productId);
-        URI uri = loadBalancer.choose("productcomposite").getUri();
-        String url = uri.toString() + "/product/" + productId;
+        LOG.info("ProductApi: User={}, Auth={}, called with urlId={}", currentUser.getName(), authorizationHeader, urlId);
+        URI uri = loadBalancer.choose("movie-catalog-service").getUri();
+        String url = uri.toString() + "/catalog/" + urlId;
         LOG.debug("GetProductComposite from URL: {}", url);
 
         ResponseEntity<String> result = restTemplate.getForEntity(url, String.class);
