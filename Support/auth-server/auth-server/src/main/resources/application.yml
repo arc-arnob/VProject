@@ -1,6 +1,8 @@
 server:
   port: 9999
 spring:
+  application:
+    name: authorization-server-api
   datasource:
     url: jdbc:mysql://localhost:3306/authDB?createDatabaseIfNotExist=true
     username: root
