@@ -14,7 +14,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 // import org.springframework.security.access.prepost.PreAuthorize;
 // import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 // import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -79,7 +79,7 @@ public class HomeController {
 
    // @PreAuthorize("hasAuthority('SCOPE_profile')")
     @GetMapping("/showmovies") //<-- product-composite
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Object[] showAllMovies(){
 
         ResponseEntity<Movie[]> responseEntity = restTemplate.getForEntity("http://movie-service-api/movieservice/allmovies", Movie[].class);
@@ -88,7 +88,7 @@ public class HomeController {
     }
 
     @GetMapping("/showratedmovie/{userId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Object[] showAllRatedMovies(@PathVariable String userId){
         ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity("http://review-service-api/ratingservice/allratings/" + userId, Object[].class);
         Object[] objects = responseEntity.getBody();
