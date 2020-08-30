@@ -10,3 +10,5 @@ Authorization Code flow yet to be dubugged.(Rectified)
 30-August- 2020 -->Authorization Code flow yet to be dubugged.(Rectified)
 
 Next task --> Add ssl certificate
+                |-30 aug 2020- added in api gate- product api.
+                |
