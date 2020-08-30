@@ -1,5 +1,7 @@
 package com.zullservice.zuulservice.filter.pre;
 
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.ZuulFilter;
@@ -29,10 +31,17 @@ public class SimpleFilter extends ZuulFilter {
   @Override
   public Object run() {
     RequestContext ctx = RequestContext.getCurrentContext();
-    HttpServletRequest request = ctx.getRequest();
-
-    log.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
-
+    StringBuffer strLog = new StringBuffer();
+    strLog.append("\n------ Info For you------\n");
+    strLog.append(String.format("Server: %s Metodo: %s Path: %s \n", ctx.getRequest().getServerName(), ctx.getRequest().getMethod(),
+    ctx.getRequest().getRequestURI()));
+    Enumeration < String > enume = ctx.getRequest().getHeaderNames();
+    String header;
+    while (enume.hasMoreElements()) {
+    header = enume.nextElement();
+    strLog.append(String.format("Headers: %s = %s \n", header, ctx.getRequest().getHeader(header)));
+    };
+    log.info(strLog.toString());
     return null;
   }
 

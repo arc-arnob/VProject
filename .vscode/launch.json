@@ -68,6 +68,16 @@
             "mainClass": "com.authserver.authserver.AuthServerApplication",
             "projectName": "auth-server",
             "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ProductServiceApiApplication<product-service-api>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.productserviceapi.productserviceapi.ProductServiceApiApplication",
+            "projectName": "product-service-api",
+            "args": ""
         }
     ]
 }
