@@ -29,7 +29,7 @@ public class ProductService {
     private LoadBalancerClient loadBalancer;
 
     @RequestMapping("/{urlId}")
-    //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('user','admin')")
     public ResponseEntity<String> getProductComposite(@PathVariable String urlId) {
 
         //Debug
