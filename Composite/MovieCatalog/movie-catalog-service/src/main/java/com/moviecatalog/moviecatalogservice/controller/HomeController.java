@@ -1,6 +1,8 @@
 package com.moviecatalog.moviecatalogservice.controller;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.moviecatalog.moviecatalogservice.model.Movie;
@@ -13,6 +15,7 @@ import org.springframework.core.ResolvableType;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
 // import org.springframework.security.access.prepost.PreAuthorize;
@@ -93,6 +96,30 @@ public class HomeController {
         ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity("http://review-service-api/ratingservice/allratings/" + userId, Object[].class);
         Object[] objects = responseEntity.getBody();
         return objects;
+    }
+
+    @PostMapping("/ratemovie")
+    //@PreAuthorize("hasRole('user')")
+    public ResponseEntity<String> rateMovies(@RequestBody final String rating) {
+         HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+         HttpEntity<String> entity = new HttpEntity<String>(rating, headers);
+         ResponseEntity<String> result = restTemplate
+                .postForEntity("http://review-service-api/ratingservice/addrating", entity, String.class);
+        
+        return new ResponseEntity<>(result.getStatusCode()); //working on it
+    }
+
+    @PostMapping("/addmovie")
+    //@PreAuthorize("hasRole('admin')")
+    public ResponseEntity<String> addMovie(@RequestBody final String movie) {
+         HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+         HttpEntity<String> entity = new HttpEntity<String>(movie, headers);
+         ResponseEntity<String> result = restTemplate
+                .postForEntity("http://movie-service-api/movieservice/addmovie", entity, String.class);
+        
+        return new ResponseEntity<>(result.getStatusCode());
     }
     
     
