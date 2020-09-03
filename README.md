@@ -11,4 +11,6 @@ Authorization Code flow yet to be dubugged.(Rectified)
 
 Next task --> Add ssl certificate
                 |-30 aug 2020- added in api gate- product api.
-                |
+                |-removed ssl for postman testing
+
+2-sept-2020 --> Started With Dockerizing the microservices.
