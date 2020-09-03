@@ -1,0 +1,54 @@
+version: "3"
+
+services:
+  mysql-auth:
+    image: mysql:8
+  mysql-movie:
+    image: mysql:8
+  
+  mysql-rating:
+    image: mysql:8
+
+  zuul-service:
+    image: zuul-service
+    ports:
+      - 8763:8763
+
+  discovery-service:
+    image: discovery-service
+    ports:
+      - 8761:8761
+
+  auth-server:
+    image: auth-server
+    ports:
+      - 9999:9999
+    links:
+      - mysql-auth
+
+  movie-service-api:
+    image: movie-service-api
+    ports:
+      - 9090:9090
+    links:
+      - mysql-movie
+
+  rating-service-api:
+    image: rating-service-api
+    ports:
+      - 9091:9091
+    links:
+      - mysql-rating
+    
+
+  movie-catalog-service:
+    image: movie-catalog-service
+    ports:
+      - 8081:8081
+
+  product-service-api:
+    image: product-service-api
+    ports:
+     - 8080:8080
+
+
