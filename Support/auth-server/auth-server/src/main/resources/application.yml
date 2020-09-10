@@ -4,11 +4,10 @@ spring:
   application:
     name: authorization-server-api
   datasource:
-    url: jdbc:mysql://localhost:3306/authDB?createDatabaseIfNotExist=true
-    username: root
+    url: jdbc:mysql://mysql-auth:3306/authdb #?createDatabaseIfNotExist=true
+    username: auth123
     password: root123
     driver-class-name: com.mysql.cj.jdbc.Driver
-    initialization-mode: always
   jpa:
     hibernate:
       naming:
@@ -22,5 +21,11 @@ logging:
     org:
       hibernate:
         type: trace
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${discovery-service:http://discovery-service:8761/eureka}
+  instance:
+    preferIpAddress: true
 
 

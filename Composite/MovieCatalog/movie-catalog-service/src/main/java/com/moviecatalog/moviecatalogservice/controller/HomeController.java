@@ -93,7 +93,7 @@ public class HomeController {
     @GetMapping("/showratedmovie/{userId}")
     //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Object[] showAllRatedMovies(@PathVariable String userId){
-        ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity("http://review-service-api/ratingservice/allratings/" + userId, Object[].class);
+        ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity("http://rating-service-api/ratingservice/allratings/" + userId, Object[].class);
         Object[] objects = responseEntity.getBody();
         return objects;
     }
@@ -105,7 +105,7 @@ public class HomeController {
         headers.setContentType(MediaType.APPLICATION_JSON);
          HttpEntity<String> entity = new HttpEntity<String>(rating, headers);
          ResponseEntity<String> result = restTemplate
-                .postForEntity("http://review-service-api/ratingservice/addrating", entity, String.class);
+                .postForEntity("http://rating-service-api/ratingservice/addrating", entity, String.class);
         
         return new ResponseEntity<>(result.getStatusCode()); //working on it
     }
