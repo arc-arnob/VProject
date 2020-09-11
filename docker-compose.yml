@@ -2,32 +2,37 @@ version: "3"
 
 services:
   mysql-auth:
-    image: mysql:8
+    image: mysql
     container_name: mysql-auth
-    environment:
-      MYSQL_DATABASE: authdb
-      MYSQL_USER: auth123
-      MYSQL_PASSWORD: roo123
-      MYSQL_ROOT_PASSWORD: root123
     volumes:
       - ./data-store/auth-sql/data:/var/lib/mysql:rw
       - ./data-store/auth-sql/database/authdb_schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    environment:
+      MYSQL_DATABASE: authdb
+      MYSQL_USER: auth
+      MYSQL_PASSWORD: roo123
+      MYSQL_ROOT_PASSWORD: root123
+    
 
   mysql-movie:
-    image: mysql:8
+    image: mysql
     container_name: mysql-movie
+    volumes:
+      - ./data-store/movie-sql/data:/var/lib/mysql:rw
+      - ./data-store/movie-sql/database/movie_movie.sql:/docker-entrypoint-initdb.d/schema.sql:ro
     environment:
       MYSQL_DATABASE: movie #name conflict
       MYSQL_USER: movie123
       MYSQL_PASSWORD: roo123
       MYSQL_ROOT_PASSWORD: root123
-    volumes:
-      - ./data-store/movie-sql/data:/var/lib/mysql:rw
-      - ./data-store/movie-sql/database/movie_movie.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    
  
   mysql-rating:
-    image: mysql:8
+    image: mysql
     container_name: mysql-rating
+    volumes:
+      - ./data-store/rating-sql/data:/var/lib/mysql:rw
+      - ./data-store/rating-sql/database/rating_movie.sql:/docker-entrypoint-initdb.d/schema.sql:ro
     environment:
       MYSQL_DATABASE: rating
       MYSQL_USER: rating123
@@ -37,9 +42,7 @@ services:
     #   - '3306:3306'
     # expose:
     #   - '3306'
-    volumes:
-      - ./data-store/rating-sql/data:/var/lib/mysql:rw
-      - ./data-store/rating-sql/database/rating_movie.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+   
   
   discovery-service:
     image: discovery-service
