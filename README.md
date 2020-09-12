@@ -40,7 +40,8 @@ rating-service-api |	/rating/deleterating/{ratingId} |	POST | Delete any exisiti
 ## GATEWAYS
 Service |	EndPoint
 ------- | ------- 
-auth-server	| ??
+auth-server	| /api/authserver/oauth/token
+auth-server	| /api/authserver/oauth/check_token
 product-service-api	| /api/resource-server-api
 
 URI for gateway : http://localhost:8763
