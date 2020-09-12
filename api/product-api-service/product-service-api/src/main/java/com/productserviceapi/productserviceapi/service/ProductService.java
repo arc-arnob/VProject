@@ -73,7 +73,7 @@ public class ProductService {
 
         System.out.println(url);
         // http://localhost:8081/catalog/showmovies
-        // http://localhost:8081/catalog/showratedmovies/101
+        // http://localhost:8081/catalog/showratedmovie/101
 
         //Debug
         LOG.debug("GetProductComposite from URL: {}", url);

@@ -1,9 +1,5 @@
 package com.moviecatalog.moviecatalogservice.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-
 public class Movie {
 
     private long movieId;

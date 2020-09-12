@@ -5,16 +5,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.moviecatalog.moviecatalogservice.model.CatalogItem;
 import com.moviecatalog.moviecatalogservice.model.Movie;
+import com.moviecatalog.moviecatalogservice.model.Rating;
+import com.moviecatalog.moviecatalogservice.model.UserRating;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.ResolvableType;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,9 +27,6 @@ import org.springframework.http.ResponseEntity;
 // import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 // import org.springframework.security.oauth2.client.registration.ClientRegistration;
 // import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -49,36 +49,7 @@ public class HomeController {
     @Autowired
     RestTemplate restTemplate;
 
-    // Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
 
-  
-    // @Autowired
-    // private OAuth2AuthorizedClientService authorizedClientService;
-
-    // @GetMapping("/loginSuccess")
-    // public String getLoginInfo(Model model, OAuth2AuthenticationToken authentication) {
-    //     OAuth2AuthorizedClient client = authorizedClientService.loadAuthorizedClient(authentication.getAuthorizedClientRegistrationId(), authentication.getName());
-
-    //     String userInfoEndpointUri = client.getClientRegistration()
-    //         .getProviderDetails()
-    //         .getUserInfoEndpoint()
-    //         .getUri();
-
-    //     if (!StringUtils.isEmpty(userInfoEndpointUri)) {
-    //         RestTemplate restTemplate = new RestTemplate();
-    //         HttpHeaders headers = new HttpHeaders();
-    //         headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + client.getAccessToken()
-    //             .getTokenValue());
-
-    //         HttpEntity<String> entity = new HttpEntity<String>("", headers);
-
-    //         ResponseEntity<Map> response = restTemplate.exchange(userInfoEndpointUri, HttpMethod.GET, entity, Map.class);
-    //         Map userAttributes = response.getBody();
-    //         model.addAttribute("name", userAttributes.get("name"));
-    //     }
-
-    //     return "loginSuccess";
-    // }
 
    // @PreAuthorize("hasAuthority('SCOPE_profile')")
     @GetMapping("/showmovies") //<-- product-composite
@@ -90,12 +61,24 @@ public class HomeController {
         return movies;
     }
 
-    @GetMapping("/showratedmovie/{userId}")
+    @GetMapping("/showratedmovie_d/{userId}")
     //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Object[] showAllRatedMovies(@PathVariable String userId){
         ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity("http://rating-service-api/ratingservice/allratings/" + userId, Object[].class);
         Object[] objects = responseEntity.getBody();
         return objects;
+    }
+
+    @GetMapping("/showratedmovie/{userId}")
+    public List<CatalogItem> getCatalog(@PathVariable String userId){
+        ResponseEntity<Rating[]> userRating = restTemplate.getForEntity("http://rating-service-api/ratingservice/allratings/"+ userId ,Rating[].class);
+        
+        System.out.println("********************123123*****\n*********\n*********"+userRating.getBody()); //returning null
+        List<Rating> ratings = Arrays.asList(userRating.getBody());
+        return ratings.stream().map(rating -> {
+            Movie movie = restTemplate.getForObject("http://movie-service-api/movieservice/movie/"+ (""+rating.getMovieId()), Movie.class);
+            return new CatalogItem(movie.getMovie_name(), movie.getMovie_desc(), rating.getRating());
+        }).collect(Collectors.toList());
     }
 
     @PostMapping("/ratemovie")

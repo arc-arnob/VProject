@@ -1,15 +1,10 @@
-package com.ratingapi.ratingserviceapi.models;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+package com.moviecatalog.moviecatalogservice.model;
 
-@Entity
+import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
+
 public class Rating {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long ratingId;
+    private long ratingId; //String
     private String movieId;
     private String userId;
     private String rating;
@@ -51,7 +46,7 @@ public class Rating {
         return ratingId;
     }
 
-    public void setRatingId(int ratingId) {
+    public void setRatingId(long ratingId) {
         this.ratingId = ratingId;
     }
 

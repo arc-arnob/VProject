@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.ratingapi.ratingserviceapi.models.Rating;
 import com.ratingapi.ratingserviceapi.service.RatingService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +25,7 @@ public class RatingController {
 
     @GetMapping(path = "/allratings/{userId}")
     public List<Rating> getUserRatings(@PathVariable String userId){
-
+        System.out.println("in movie service");
         return this.ratingService.getUserRatings(userId); //working
     }
 
