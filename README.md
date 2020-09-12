@@ -58,12 +58,13 @@ URI for gateway : http://localhost:8763
 
 In docker-compose.yml file:
 
-* Accounts Service : 2222 port is mapped to 7500 port of host
-* Products Service : 2222 port is mapped to 7501 port of host
-* Orders Service : 2222 port is mapped to 7502 port of host
-* Backoffice Service : 2222 port is mapped to 7503 port of host
-* Eureka Discovery Service : 8761 port is mapped to 8761 port of host
-* Zuul Gateway Service : 8762 port is mapped to 8762 port of host
+* discovery-service : 8761 port is mapped to 8761 port of host
+* auth-server : 9999 port is mapped to 9999 port of host
+* movie-service-api : 9090 port is mapped to 9090 port of host
+* rating-service-api : 9091 port is mapped to 9091 port of host
+* movie-catalog-service : 8081 port is mapped to 8081 port of host
+* product-service-api : 8080 port is mapped to 8080 port of host
+* zuul-server : 8763 port is mapped to 8763 port of port 
 
 ## VERSIONS
 
