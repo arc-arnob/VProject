@@ -4,8 +4,6 @@ import java.net.URI;
 import java.security.Principal;
 
 import com.productserviceapi.productserviceapi.model.Movie;
-import com.productserviceapi.productserviceapi.model.MovieList;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
