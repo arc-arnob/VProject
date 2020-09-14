@@ -3,9 +3,13 @@ package com.productserviceapi.productserviceapi.service;
 import java.net.URI;
 import java.security.Principal;
 
+import com.productserviceapi.productserviceapi.model.Movie;
+import com.productserviceapi.productserviceapi.model.MovieList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +27,8 @@ import org.springframework.web.client.RestTemplate;
 @EnableResourceServer
 public class ProductService {
     
+    @Value("${api.key}")
+    private String apiKey;
 
     private static final Logger LOG = LoggerFactory.getLogger(ProductService.class);
 
@@ -144,6 +150,15 @@ public class ProductService {
         //LOG.debug("GetProductComposite body: {}", result.getBody());
 
         return result;
+    }
+
+    //Home List of all movies 
+    @GetMapping(path = "/home")
+    @PreAuthorize("hasAnyRole('user','admin')")
+    public ResponseEntity<Movie[]> getMoviedb(){
+        ResponseEntity<Movie[]> movielist = restTemplate.getForEntity("https://api.themoviedb.org/3/movie/popular?api_key=" + apiKey + "&language=en-US&page=1", Movie[].class);
+
+        return movielist;
     }
 
 }
