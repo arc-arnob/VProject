@@ -2,8 +2,12 @@ package com.productserviceapi.productserviceapi.service;
 
 import java.net.URI;
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.List;
 
 import com.productserviceapi.productserviceapi.model.Movie;
+import com.productserviceapi.productserviceapi.model.MovieList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,10 +157,9 @@ public class ProductService {
     //Home List of all movies 
     @GetMapping(path = "/home")
     @PreAuthorize("hasAnyRole('user','admin')")
-    public ResponseEntity<Movie[]> getMoviedb(){
-        ResponseEntity<Movie[]> movielist = restTemplate.getForEntity("https://api.themoviedb.org/3/movie/popular?api_key=" + apiKey + "&language=en-US&page=1", Movie[].class);
-
-        return movielist;
+    public MovieList getMoviedb(){
+        MovieList movies = restTemplate.getForObject("https://api.themoviedb.org/3/movie/popular?api_key="+ apiKey +"&language=en-US&page=1", MovieList.class);
+        return movies;
     }
 
 }

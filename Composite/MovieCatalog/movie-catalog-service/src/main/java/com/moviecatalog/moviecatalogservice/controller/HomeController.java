@@ -41,19 +41,11 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/catalog")
 public class HomeController {
 
-    // @Bean
-    // @LoadBalanced
-    // public RestTemplate restTemplate() {
-    //     return new RestTemplate();
-    // }
+  
     @Autowired
     RestTemplate restTemplate;
 
-
-
-   // @PreAuthorize("hasAuthority('SCOPE_profile')")
     @GetMapping("/showmovies") //<-- product-composite
-    //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Object[] showAllMovies(){
 
         ResponseEntity<Movie[]> responseEntity = restTemplate.getForEntity("http://movie-service-api/movieservice/allmovies", Movie[].class);
@@ -62,7 +54,6 @@ public class HomeController {
     }
 
     @GetMapping("/showratedmovie_d/{userId}")
-    //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Object[] showAllRatedMovies(@PathVariable String userId){
         ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity("http://rating-service-api/ratingservice/allratings/" + userId, Object[].class);
         Object[] objects = responseEntity.getBody();
@@ -82,9 +73,8 @@ public class HomeController {
     }
 
     @PostMapping("/ratemovie")
-    //@PreAuthorize("hasRole('user')")
     public ResponseEntity<String> rateMovies(@RequestBody final String rating) {
-         HttpHeaders headers = new HttpHeaders();
+        HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
          HttpEntity<String> entity = new HttpEntity<String>(rating, headers);
          ResponseEntity<String> result = restTemplate
@@ -94,7 +84,6 @@ public class HomeController {
     }
 
     @PostMapping("/addmovie")
-    //@PreAuthorize("hasRole('admin')")
     public ResponseEntity<String> addMovie(@RequestBody final String movie) {
          HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
