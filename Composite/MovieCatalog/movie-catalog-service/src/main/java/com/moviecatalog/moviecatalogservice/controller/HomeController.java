@@ -30,6 +30,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.annotation.ModelAndViewResolver;
 
 // import java.util.HashMap;
 // import java.util.List;
@@ -83,15 +84,15 @@ public class HomeController {
         return new ResponseEntity<>(result.getStatusCode()); //working on it
     }
 
-    @PostMapping("/addmovie")
-    public ResponseEntity<String> addMovie(@RequestBody final String movie) {
+    @PostMapping(path = "/addmovie", produces = "application/json")
+    public Movie addMovie(@RequestBody final String movie) {
          HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
          HttpEntity<String> entity = new HttpEntity<String>(movie, headers);
-         ResponseEntity<String> result = restTemplate
-                .postForEntity("http://movie-service-api/movieservice/addmovie", entity, String.class);
+         ResponseEntity<Movie> result = restTemplate
+                .postForEntity("http://movie-service-api/movieservice/addmovie", entity, Movie.class);
         
-        return new ResponseEntity<>(result.getStatusCode());
+        return result.getBody();
     }
     
     
