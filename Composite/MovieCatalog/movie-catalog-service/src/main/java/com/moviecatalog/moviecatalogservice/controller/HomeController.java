@@ -73,6 +73,12 @@ public class HomeController {
         }).collect(Collectors.toList());
     }
 
+    @GetMapping("/showmoviebyid/{movieId}")
+    public Movie getMovieById(@PathVariable String movieId){
+
+        return restTemplate.getForObject("http://movie-service-api/movieservice/movie/"+movieId, Movie.class);
+    }
+    
     @PostMapping("/ratemovie")
     public ResponseEntity<String> rateMovies(@RequestBody final String rating) {
         HttpHeaders headers = new HttpHeaders();

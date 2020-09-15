@@ -170,4 +170,17 @@ public class ProductService {
         return movies;
     }
 
+    @RequestMapping("/showmoviesbyid/{urlId}")
+    @PreAuthorize("hasAnyRole('user','admin')")
+    public ResponseEntity<String> getMovieById(@PathVariable String urlId) {
+
+        
+        URI uri = loadBalancer.choose("movie-catalog-service").getUri();
+        String url = uri.toString() + "/catalog/showmoviebyid/" + urlId;
+
+        ResponseEntity<String> result = restTemplate.getForEntity(url, String.class);
+
+        return result;
+    }
+
 }

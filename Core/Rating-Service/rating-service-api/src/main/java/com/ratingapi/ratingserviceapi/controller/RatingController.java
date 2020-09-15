@@ -1,7 +1,9 @@
 package com.ratingapi.ratingserviceapi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.ratingapi.ratingserviceapi.models.Rating;
 import com.ratingapi.ratingserviceapi.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +26,14 @@ public class RatingController {
     RatingService ratingService;
 
     @GetMapping(path = "/allratings/{userId}")
+    @HystrixCommand(fallbackMethod = "getFallbackUserRatings")
     public List<Rating> getUserRatings(@PathVariable String userId){
         System.out.println("in movie service");
         return this.ratingService.getUserRatings(userId); //working
+    }
+    public List<Rating> getFallbackUserRatings(@PathVariable String userId){
+        List<Rating> ls = new ArrayList();
+        return ls;
     }
 
     @PostMapping("/addrating")
