@@ -92,7 +92,7 @@ public class HomeController {
          ResponseEntity<Movie> result = restTemplate
                 .postForEntity("http://movie-service-api/movieservice/addmovie", entity, Movie.class);
         
-        return result.getBody();
+        return result.getBody(); // add movies updated, now returns json
     }
     
     
