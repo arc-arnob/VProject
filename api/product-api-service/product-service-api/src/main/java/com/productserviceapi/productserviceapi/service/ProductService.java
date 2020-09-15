@@ -154,11 +154,19 @@ public class ProductService {
         return result;
     }
 
-    //Home List of all movies 
-    @GetMapping(path = "/home")
+    //Home List of all movies from moviedb
+    @GetMapping(path = "/home/{page}")
     @PreAuthorize("hasAnyRole('user','admin')")
-    public MovieList getMoviedb(){
-        MovieList movies = restTemplate.getForObject("https://api.themoviedb.org/3/movie/popular?api_key="+ apiKey +"&language=en-US&page=1", MovieList.class);
+    public MovieList getMoviedb(@PathVariable String page){
+        MovieList movies = restTemplate.getForObject("https://api.themoviedb.org/3/movie/popular?api_key="+ apiKey +"&language=en-US&page=" + page, MovieList.class);
+        return movies;
+    }
+
+    // Search Movie
+    @GetMapping(path = "/search/{movie_name}")
+    @PreAuthorize("hasAnyRole('user','admin')")
+    public MovieList searchMoviedb(@PathVariable String movie_name){
+        MovieList movies = restTemplate.getForObject("https://api.themoviedb.org/3/search/movie?api_key=" + apiKey +"&language=en-US&query="+ movie_name+ "&page=1", MovieList.class);
         return movies;
     }
 
