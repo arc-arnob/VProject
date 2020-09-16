@@ -1,28 +1,31 @@
 package com.productserviceapi.productserviceapi;
 
-import java.beans.BeanProperty;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.connector.Connector;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+//@EnableCircuitBreaker
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ProductServiceApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProductServiceApiApplication.class, args);
-	}
+    }
+    @Bean
+    public RestTemplate restTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+        ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setConnectTimeout(15000);
+        ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setReadTimeout(15000);
+
+        return restTemplate;
+    }
 
 	// @Bean
     // public ServletWebServerFactory servletContainer() {

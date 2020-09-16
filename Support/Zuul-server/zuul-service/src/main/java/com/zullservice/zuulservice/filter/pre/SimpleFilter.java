@@ -1,48 +1,81 @@
 package com.zullservice.zuulservice.filter.pre;
 
+import java.io.IOException;
 import java.util.Enumeration;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import com.netflix.zuul.context.RequestContext;
+import javax.servlet.http.HttpServletResponse;
+
 import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-public class SimpleFilter extends ZuulFilter {
+@Component
+public class SimpleFilter implements Filter{
 
   private static Logger log = LoggerFactory.getLogger(SimpleFilter.class);
 
   @Override
-  public String filterType() {
-    return "pre";
+  public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+      throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) res;
+    
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, HEAD, PATCH, PUT");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers","x-requested-with, authorization");
+    
+      if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+          response.setStatus(HttpServletResponse.SC_OK);
+      } else {
+          chain.doFilter(req, res);
+      }
+
   }
 
   @Override
-  public int filterOrder() {
-    return 1;
+  public void init(FilterConfig filterConfig) throws ServletException {
+    // TODO Auto-generated method stub
+    Filter.super.init(filterConfig);
   }
 
-  @Override
-  public boolean shouldFilter() {
-    return true;
-  }
 
-  @Override
-  public Object run() {
-    RequestContext ctx = RequestContext.getCurrentContext();
-    StringBuffer strLog = new StringBuffer();
-    strLog.append("\n------ Info For you------\n");
-    strLog.append(String.format("Server: %s Metodo: %s Path: %s \n", ctx.getRequest().getServerName(), ctx.getRequest().getMethod(),
-    ctx.getRequest().getRequestURI()));
-    Enumeration < String > enume = ctx.getRequest().getHeaderNames();
-    String header;
-    while (enume.hasMoreElements()) {
-    header = enume.nextElement();
-    strLog.append(String.format("Headers: %s = %s \n", header, ctx.getRequest().getHeader(header)));
-    };
-    log.info(strLog.toString());
-    return null;
-  }
+
+  //   @Override
+  //   public String filterType() {
+  //       return "post";
+  //   }
+
+  //   @Override
+  //   public int filterOrder() {
+  //     return 1;
+  //   }
+
+  //   @Override
+  //   public boolean shouldFilter() {
+  //     return RequestContext.getCurrentContext().getZuulResponseHeaders().stream()
+  //  .anyMatch(ssp -> ssp.first().toLowerCase().equalsIgnoreCase("access-control-allow-origin")) &&
+  //   RequestContext.getCurrentContext().getOriginResponseHeaders().stream()
+  //  .anyMatch(ssp -> ssp.first().toLowerCase().equalsIgnoreCase("access-control-allow-origin"));
+    
+  // }
+
+  //   @Override
+  //   public Object run() {
+  //     RequestContext.getCurrentContext().getZuulResponseHeaders()
+  //     .removeIf(ssp -> ssp.first().toLowerCase().startsWith("access-control-allow"));
+  //     return null;
+  //   }
 
 }

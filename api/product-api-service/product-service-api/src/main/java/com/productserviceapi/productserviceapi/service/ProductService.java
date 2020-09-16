@@ -2,10 +2,6 @@ package com.productserviceapi.productserviceapi.service;
 
 import java.net.URI;
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.List;
-
-import com.productserviceapi.productserviceapi.model.Movie;
 import com.productserviceapi.productserviceapi.model.MovieList;
 
 import org.slf4j.Logger;
@@ -31,11 +27,10 @@ public class ProductService {
     
     @Value("${api.key}")
     private String apiKey;
-
     private static final Logger LOG = LoggerFactory.getLogger(ProductService.class);
-
-    private RestTemplate restTemplate = new RestTemplate();
-
+    // private RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    RestTemplate restTemplate;
     @Autowired
     private LoadBalancerClient loadBalancer;
 
