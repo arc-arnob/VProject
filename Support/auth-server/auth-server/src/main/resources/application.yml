@@ -10,6 +10,8 @@ spring:
     #username: auth
     password: root123
     driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    active: docker
   jpa:
     hibernate:
       naming:
@@ -29,5 +31,7 @@ logging:
 #       defaultZone: ${discovery-service:http://discovery-service:8761/eureka}
 #   instance:
 #     preferIpAddress: true
+
+
 
 

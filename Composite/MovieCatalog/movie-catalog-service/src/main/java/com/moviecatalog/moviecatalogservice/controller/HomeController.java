@@ -69,7 +69,7 @@ public class HomeController {
         List<Rating> ratings = Arrays.asList(userRating.getBody());
         return ratings.stream().map(rating -> {
             Movie movie = restTemplate.getForObject("http://movie-service-api/movieservice/movie/"+ (""+rating.getMovieId()), Movie.class);
-            return new CatalogItem(movie.getMovie_name(), movie.getMovie_desc(), rating.getRating());
+            return new CatalogItem(movie.getMovie_name(), movie.getMovie_desc(), rating.getRating(),rating.getRatingId());
         }).collect(Collectors.toList());
     }
 
