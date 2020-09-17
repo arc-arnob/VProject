@@ -49,7 +49,12 @@ product-service-api	| /api/resource-server-api/userratings/{userId}
 product-service-api	| /api/resource-server-api/showmoviesbyid/{movieId}
 
 URI for gateway : http://localhost:8763
-URI for React : http://localhost:3000
+URI for movie-catalog-service : http://localhost:8081
+URI for movie-service-api : http://localhost:9090
+URI for rating-service-api : http://localhost:9091
+URI for auth-server : http://localhost:9999
+URI for eureka-server : http://localhost:8761
+URI for zuul-server : http://localhost:8763
 
 ## Used Netflix OSS:
 * Netflix Eureka is used for discovery service.
@@ -78,10 +83,51 @@ In docker-compose.yml file:
 * Spring-Boot 2.3.3.RELEASE
 * Java 11
 * Docker Image updated
-* Spring-Cloud artifacts have been changed
+* MySql 8
+* Spring-Cloud artifacts
 
+## Run on your PC without Docker
 
+### What Will You Build
+You will build a web application that is Oauth2 enabled.
 
+### What you will need
+
+* A favorite text editor or IDE
+* JDK 1.8 or later
+* Gradle 4+ or Maven 3.2+
+
+### To clone and the project do the following
+* Download and unzip the source repository for this guide, or clone it using Git: git clone https://github.com/arc-arnob/VProject.git
+* cd to /target folders of all the spring boot applications and run: mvnw spring-boot:run
+
+### MySql Workbench Configuration
+Make the following configuration changes in the application.properties file to make it run with your local sql server
+* File Location: VProject/Support/auth-server/auth-server/src/main/resources/application.yml	
+    * Configuration:
+    ```
+    datasource :url: jdbc:mysql://localhost:3306/authdb?createDatabaseIfNotExist=true 
+    username: <your sql server username>
+    password: <your sql server password>
+    driver-class-name: com.mysql.cj.jdbc.Driver
+   ```
+ * File Location: VProject/Core/Movie-service/movie-service-api/src/main/resources/application.properties	
+    * Configuration:
+    ```
+    datasource :url: jdbc:mysql://localhost:3306/movie?createDatabaseIfNotExist=true 
+    username: <your sql server username>
+    password: <your sql server password>
+    driver-class-name: com.mysql.cj.jdbc.Driver
+   ```
+ * File Location: VProject/Core/Rating-Service/rating-service-api/src/main/resources/application.properties
+    * Configuration:
+    ```
+    datasource :url: jdbc:mysql://localhost:3306/rating?createDatabaseIfNotExist=true 
+    username: <your sql server username>
+    password: <your sql server password>
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    ```
+    
 ## CONTRIBUTORS
 @madhavtib, @birajghosh6
 
