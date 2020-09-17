@@ -1,4 +1,4 @@
-# SPRING BOOT MICROCSERVICE USING SPRING CLOUD, OAUTH,JWT, EUREKA, RIBBON, ZUUL, DOCKER, React
+# SPRING BOOT MICROCSERVICE USING SPRING CLOUD, OAUTH,JWT, EUREKA, RIBBON, ZUUL, DOCKER
 This project is created to get experience on Microservices With OAuth, JWT etc. This is a simple project by coded imperative programming with simple business requirements.
 
 The project have been dockerized
@@ -127,7 +127,12 @@ Make the following configuration changes in the application.properties file to m
     password: <your sql server password>
     driver-class-name: com.mysql.cj.jdbc.Driver
     ```
-    
+
+## NOTE
+* For ReactJs Integrated project please follow this link:
+http://github.com - automatic!
+[GitHub](http://github.com)
+
 ## CONTRIBUTORS
 @madhavtib, @birajghosh6
 
