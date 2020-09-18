@@ -130,8 +130,7 @@ Make the following configuration changes in the application.properties file to m
 
 ## NOTE
 * For ReactJs Integrated project please follow this link:
-http://github.com - automatic!
-[GitHub](http://github.com)
+[GitHub](https://github.com/Madhavtib/MovieTime)
 
 ## CONTRIBUTORS
 @madhavtib, @birajghosh6
