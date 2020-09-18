@@ -48,13 +48,13 @@ product-service-api	| /api/resource-server-api/addratings/ratemovie
 product-service-api	| /api/resource-server-api/userratings/{userId}
 product-service-api	| /api/resource-server-api/showmoviesbyid/{movieId}
 
-URI for gateway : http://localhost:8763
-URI for movie-catalog-service : http://localhost:8081
-URI for movie-service-api : http://localhost:9090
-URI for rating-service-api : http://localhost:9091
-URI for auth-server : http://localhost:9999
-URI for eureka-server : http://localhost:8761
-URI for zuul-server : http://localhost:8763
+* URI for gateway : http://localhost:8763
+* URI for movie-catalog-service : http://localhost:8081
+* URI for movie-service-api : http://localhost:9090
+* URI for rating-service-api : http://localhost:9091
+* URI for auth-server : http://localhost:9999
+* URI for eureka-server : http://localhost:8761
+* URI for zuul-server : http://localhost:8763
 
 ## Used Netflix OSS:
 * Netflix Eureka is used for discovery service.
